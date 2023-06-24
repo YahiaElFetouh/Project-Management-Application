@@ -15,6 +15,17 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PostMapping("/save")
+    public User signupUser(@RequestBody User userModel) throws Exception {
+        return userService.signUp(user);
+    }
+
+    @PutMapping("/assignTask/{userId}")
+    public UserModel updateTask(@PathVariable Long userId, @RequestParam Long taskId) {
+        return userServiceImpl.updateTask(userId, taskId);
+    }
+
+
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody User user) {
         try {
@@ -26,6 +37,13 @@ public class UserController {
 
 
     }
+
+    @PostMapping("/save")
+    public UserModel signupUser(@RequestBody UserModel userModel) throws Exception {
+        return userServiceImpl.signUpUser(userModel);
+    }
+
+
 }
 
 

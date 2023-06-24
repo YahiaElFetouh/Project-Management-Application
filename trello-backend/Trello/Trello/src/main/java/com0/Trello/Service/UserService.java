@@ -18,7 +18,9 @@ public class UserService {
         // Perform password validation
         if (!PasswordCheck(user.getPassword())) {
             System.out.println("Invalid password");
+            return;
         }
+        return userRepo.save(user);
     }
 
     private boolean PasswordCheck(String password) {
