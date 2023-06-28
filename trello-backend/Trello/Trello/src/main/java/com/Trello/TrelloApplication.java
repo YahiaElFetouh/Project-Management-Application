@@ -1,4 +1,4 @@
-package com0.Trello;
+package com.Trello;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

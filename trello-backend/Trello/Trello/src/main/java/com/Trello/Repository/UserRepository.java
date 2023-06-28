@@ -1,6 +1,7 @@
-package com.Trello.repository;
+package com.Trello.Repository;
 
-import com.trello.demo.model.User;
+
+import com.Trello.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

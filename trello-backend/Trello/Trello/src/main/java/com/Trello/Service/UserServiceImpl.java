@@ -1,29 +1,37 @@
-package com.trello.demo.Service;
+package com.Trello.Service;
 
-import com.trello.demo.model.User;
-import com.trello.demo.repository.UserRepository;
+
+import com.Trello.Model.User;
+import com.Trello.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 //IMPLEMENTATION
-@Service
-public class UserService {
+// This class has a method for Password Validation and Sign Up
 
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    @Autowired
     private final UserRepository userRepo;
 
-    public UserService(UserRepository userRepo) {
+    public UserServiceImpl(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
 
-    public void signUp(User user) {
+    public User signUp(User user) {
         // Perform password validation
-        if (!PasswordCheck(user.getPassword())) {
+        if (!passwordCheck(user.getPassword())) {
             System.out.println("Invalid password");
-            return;
+
         }
         return userRepo.save(user);
     }
 
-    private boolean PasswordCheck(String password) {
+
+    //For the following method, I have used this online source to learn how to write regex expressions
+    //https://stackoverflow.com/questions/2370015/regular-expression-for-password-validation
+    private boolean passwordCheck(String password) {
         boolean correctPass = true;
 
         if(password.length()<7){
