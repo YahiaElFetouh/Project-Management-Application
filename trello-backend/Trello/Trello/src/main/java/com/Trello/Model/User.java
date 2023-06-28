@@ -18,6 +18,10 @@ public class User {
 
     private String SecurityQuestion;
     private String SecurityAnswer;
+
+    //Might use this code later to join tables
+
+
     //table task will have many to many relationship with user table
 //    @ManyToMany(targetEntity = Task.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    @JoinTable(
@@ -39,22 +43,12 @@ public class User {
         SecurityQuestion = securityQuestion;
         SecurityAnswer = securityAnswer;
     }
-//    public List<Workspace> getWorkspace() {
-//        return workspaces;
-//    }
 
 
     public User() {
     }
 
 
-//    public List<Task> getTasks() {
-//        return tasks;
-//    }
-//
-//    public void setTasks(List<Task> tasks) {
-//        this.tasks = tasks;
-//    }
 
     public void setId(int id) {
         this.id = id;

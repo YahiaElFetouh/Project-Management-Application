@@ -22,12 +22,6 @@ public class UserController {
         return userService.signUp(userModel);
     }
 
-//    @PutMapping("/assignTask/{userId}")
-//    public User updateTask(@PathVariable Long userId, @RequestParam Long taskId) {
-//        return userService.updateTask(userId, taskId);
-//    }
-
-
 
 
 
