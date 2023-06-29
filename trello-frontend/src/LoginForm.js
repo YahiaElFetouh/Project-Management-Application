@@ -29,15 +29,15 @@ const LoginForm = () => {
       .then(response => {
          const data = response.data;
          if (data.code === 200) {
-          alert("Login Success!")
+          alert("Login Success, Welecome!")
 
          }else{
-          alert("Login fail!")
+          alert("Username or Password invalid!")
          }
       })
       .catch(error => {
         console.log('loginfail', error);
-        alert("error");
+        alert("Error");
         
       });
   };
