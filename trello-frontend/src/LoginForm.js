@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import qs from 'qs'; 
 import './LoginForm.css'
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -15,26 +16,29 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 在这里处理登录逻辑，比如发送请求到服务器进行验证
-    console.log('用户名:', username);
-    console.log('密码:', password);
-    const data = {
-      username: username,
+    
+    console.log('username:', username);
+    console.log('password:', password);
+    const data = qs.stringify({
+      email: username,
       password: password
-    };
+    });
    
-    // 发送POST请求到服务器
-    axios.post('http://127.0.0.1:8000/login', data)
+    
+    axios.post('http://127.0.0.1:8080/UserSignIn/login', data)
       .then(response => {
+         const data = response.data;
+         if (data.code === 200) {
+          alert("Login Success!")
 
-        console.log(response.data);
-        alert("success");
-        // 在这里可以处理登录成功的逻辑，比如重定向到其他页面
+         }else{
+          alert("Login fail!")
+         }
       })
       .catch(error => {
-        console.log('登录失败', error);
+        console.log('loginfail', error);
         alert("error");
-        // 在这里可以处理登录失败的逻辑，比如显示错误消息
+        
       });
   };
 
@@ -47,7 +51,7 @@ const LoginForm = () => {
           type="text"
           id="username"
           value={username}
-          placeholder='username'
+          placeholder='email'
           onChange={handleUsernameChange}
         />
 
