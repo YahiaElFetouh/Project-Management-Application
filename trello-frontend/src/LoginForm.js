@@ -29,7 +29,7 @@ const LoginForm = () => {
       .then(response => {
          const data = response.data;
          if (data.code === 200) {
-          alert("Login Success, Welecome!")
+          alert("Login Successful, Welcome!")
 
          }else{
           alert("Username or Password invalid!")

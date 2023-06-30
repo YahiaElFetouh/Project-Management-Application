@@ -27,10 +27,10 @@ public class UserController {
         userSignIn.setPassword(password);
         UserSignIn result = userService.logIn(userSignIn);
         if (result == null){
-            return new ResultVO<String>(5001, "Error!", "Login Fail!");
+            return new ResultVO<String>(5001, "Error!", "Username or Password invalid!");
         }
         else {
-            return new ResultVO<>("Login Success!");
+            return new ResultVO<>("Login Successful, Welcome!");
         }
     }
 
