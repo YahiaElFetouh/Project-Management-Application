@@ -1,25 +1,50 @@
-package com0.Trello.controller;
-
-import com0.Trello.model.UserSignIn;
-import com0.Trello.service.UserService;
+package com.Trello.Controller;
+import com.trello.demo.Service.UserService;
+import com.trello.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/UserSignIn")
+@RequestMapping("/User")
 public class UserController {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
-    @GetMapping("/fetch")
-    public List<UserSignIn> getAllUsers(){
-        return userService.getAllUsers();
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
+    @PostMapping("/save")
+    public User signupUser(@RequestBody User userModel) throws Exception {
+        return userService.signUp(user);
+    }
+
+    @PutMapping("/assignTask/{userId}")
+    public UserModel updateTask(@PathVariable Long userId, @RequestParam Long taskId) {
+        return userServiceImpl.updateTask(userId, taskId);
+    }
+
+
+    @PostMapping("/signup")
+    public ResponseEntity<String> signUp(@RequestBody User user) {
+        try {
+            userService.signUp(user);
+            return ResponseEntity.ok("User registered successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+
+    }
+
+    @PostMapping("/save")
+    public UserModel signupUser(@RequestBody UserModel userModel) throws Exception {
+        return userServiceImpl.signUpUser(userModel);
+    }
+
+
 }
+
+
+
