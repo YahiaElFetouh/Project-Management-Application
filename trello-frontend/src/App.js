@@ -1,25 +1,13 @@
+import React from 'react';
+import LoginForm from './LoginForm';
 
-import './App.css';
-import{ store } from "./store"
-import {BrowserRouter} from "react-router-dom";
-import Router from "./routes";
-import { Provider } from 'react-redux';
 
-function App() {
+const App = () => {
   return (
-    <>
-    <Provider store={store}>
-      <BrowserRouter>
-      <Router />
-      
-      </BrowserRouter>
-    </Provider>
-    
-    
-    </>
-  
-     
+    <div>
+      <LoginForm />
+    </div>
   );
-}
+};
 
 export default App;
