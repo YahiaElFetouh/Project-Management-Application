@@ -18,5 +18,8 @@ public class BoardsServiceImpl implements BoardsService {
     public BoardsModel createBoard(BoardsModel boardsModel) throws Exception {
         return boardsRepository.save(boardsModel);
     }
+    public void deleteBoard(int id) {
+        boardsRepository.deleteById(id);
+    }
 
 }
