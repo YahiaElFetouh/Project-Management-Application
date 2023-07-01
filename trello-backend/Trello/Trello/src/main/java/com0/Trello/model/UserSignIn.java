@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 public class UserSignIn {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int id;
     private String userName;
     private String email;
