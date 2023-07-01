@@ -1,7 +1,7 @@
-package com.trello.demo.Service;
+package com0.Trello.service;
 
-import com.trello.demo.model.User;
-import com.trello.demo.repository.UserRepository;
+import com0.Trello.model.UserSignIn;
+import com0.Trello.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 //IMPLEMENTATION
@@ -14,13 +14,13 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public void signUp(User user) {
+    public void signUp(UserSignIn user) {
         // Perform password validation
         if (!PasswordCheck(user.getPassword())) {
             System.out.println("Invalid password");
             return;
         }
-        return userRepo.save(user);
+        return UserRepository.save(user);
     }
 
     private boolean PasswordCheck(String password) {
