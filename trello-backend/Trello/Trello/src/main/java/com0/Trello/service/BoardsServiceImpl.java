@@ -24,6 +24,6 @@ public class BoardsServiceImpl implements BoardsService {
         return null;
     }
 
-    
+
 
 }
