@@ -20,6 +20,10 @@ public class BoardsController {
     public BoardsModel createBoard(@RequestBody BoardsModel boardsModel) throws Exception {
         return boardsService.createBoard(boardsModel);
     }
+    @DeleteMapping("/{id}")
+    public void deleteBoard(@PathVariable Long id) throws Exception {
+        boardsService.deleteBoard(id);
+    }
 
 
 }

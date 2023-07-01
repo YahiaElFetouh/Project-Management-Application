@@ -4,4 +4,5 @@ import com0.Trello.model.BoardsModel;
 
 public interface BoardsService {
     BoardsModel createBoard(BoardsModel boardsModel) throws Exception;
+    BoardsModel deleteBoard(long id) throws Exception;
 }
