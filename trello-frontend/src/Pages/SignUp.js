@@ -4,10 +4,9 @@ import { Form, FormikProvider, useFormik } from "formik";
 import { LoadingButton } from "@mui/lab";
 import {
   Container,Stack,TextField,Box,Typography} from "@mui/material";
+  import { useNavigate } from "react-router-dom";
+  import { useDispatch } from "react-redux";
 
-
-// import VisibilityIcon from "@mui/icons-material/Visibility";
-// import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 export default function SignUp() {
   const [passShow, setPass] = useState(false);
@@ -22,6 +21,9 @@ export default function SignUp() {
     email: Yup.string()
       .email("not valid!")
       .required("Email is required!"),
+    securityAnswer: Yup.string()
+      // in case last name is not entered
+      .required("Enter Answer"),
     password: Yup.string().required("Password is required!"),
     confirmation: Yup.string().oneOf(
       [Yup.ref("password"), null],
@@ -29,28 +31,55 @@ export default function SignUp() {
     ),
   });
 
+  // const dispatch = useDispatch();
+    const navigate = useNavigate();
 
 
-  const formik = useFormik({
-    initialValues: {
-      fName: '',
-      lName: '',
-      email: '',
-      password: '',
-      confirmation: '',
-    },
-    validationSchema: Register,
 
-    onSubmit: async (values) => {
-      // const { email, password, firstName, lastName } = values;
-      console.log(values);
+   const formik = useFormik({
+  initialValues: {
+    fName: '',
+    lName: '',
+    email: '',
+    password: '',
+    confirmation: '',
+    securityAnswer: '',
+  },
+  validationSchema: Register,
 
-   
-    
-      
+  onSubmit: async (values) => {
+    const {email, password, fName, lName, securityAnswer} = values;
+    console.log(values);
 
-    },
-  });
+
+  // Code for linking the frontend and the backend:
+  // Referred these sources:
+  //1) https://dmitripavlutin.com/javascript-fetch-async-await/
+
+  try {
+      await fetch('http://localhost:8080/users/save', {
+          method: 'POST',
+          body: JSON.stringify({
+              fName,
+              lName,
+              email,
+              password,
+              securityAnswer,
+          }),
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+
+      // Registration successful, navigate to the login page
+      navigate("/login");
+  } catch (error) {
+      console.error(error);
+      // Handle error if the registration request fails
+  }
+},
+});
+
 
 
   
@@ -124,6 +153,17 @@ export default function SignUp() {
                     touched.passwordConfirmation && errors.passwordConfirmation
                   }
                 />
+                <TextField
+                            fullWidth
+                            label="Answer"
+                            {...getFieldProps("securityAnswer"
+                            )}
+                            error={Boolean(touched.securityAnswer && errors.securityAnswer)}
+                            helperText={touched.securityAnswer && errors.securityAnswer}
+                        />
+
+
+                
 
                 <LoadingButton loading={isSubmitting}>
                   Sign Up
