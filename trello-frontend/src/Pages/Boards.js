@@ -19,7 +19,8 @@ export default function Boards() {
       setCards(createNewCards);
     };
     
-
+// in this code, new divs are created when the button is clicked. New divs are basically cards, which will later on
+// have tasks in it
   return (
     <div>
       <button class ="div-wrapper" onClick={addCard}>Create a new card</button>
