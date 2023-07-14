@@ -1,9 +1,12 @@
-package com0.Trello.contoller;
+package com0.Trello.controller;
 
-import com0.Trello.model.UserModel;
+import com0.Trello.model.ResultVO;
+import com0.Trello.model.User;
 import com0.Trello.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/User")
@@ -17,37 +20,26 @@ public class UserController {
     }
 
     @PatchMapping("/updatePassword/{userId}")
-    public UserModel forgotPasswordUser(@PathVariable int userId, @RequestParam String answer, @RequestParam String password) {
+    public User forgotPasswordUser(@PathVariable int userId, @RequestParam String answer, @RequestParam String password) {
         return userService.updatePassword(userId, answer, password);
-    }
-
-    public UserController(UserService userService) {
-        this.userService = userService;
     }
 
     @PostMapping("/save")
     public User signupUser(@RequestBody User userModel) throws Exception {
         return userService.signUp(userModel);
     }
-}
-@RestController
-@RequestMapping("/UserSignIn")
-public class UserController {
-
-    @Autowired
-    UserService userService;
 
     @GetMapping("/fetch")
-    public List<UserSignIn> getAllUsers(){
+    public List<User> getAllUsers(){
         return userService.getAllUsers();
     }
 
     @PostMapping("/login")
     public ResultVO<String> userLogin(@RequestParam String email, @RequestParam String password){
-        UserSignIn userSignIn = new UserSignIn();
+        User userSignIn = new User();
         userSignIn.setEmail(email);
         userSignIn.setPassword(password);
-        UserSignIn result = userService.logIn(userSignIn);
+        User result = userService.logIn(userSignIn);
         if (result == null){
             return new ResultVO<String>(5001, "Error!", "Username or Password invalid!");
         }

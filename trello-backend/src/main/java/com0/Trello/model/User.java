@@ -1,4 +1,4 @@
-package com.Trello.Model;
+package com0.Trello.model;
 
 import jakarta.persistence.*;
 
@@ -81,5 +81,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSecurityQuestion() {
+        return SecurityQuestion;
+    }
+
+    public void setSecurityQuestion(String securityQuestion) {
+        SecurityQuestion = securityQuestion;
+    }
+
+    public String getSecurityAnswer() {
+        return SecurityAnswer;
+    }
+
+    public void setSecurityAnswer(String securityAnswer) {
+        SecurityAnswer = securityAnswer;
     }
 }

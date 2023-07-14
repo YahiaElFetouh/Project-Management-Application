@@ -1,7 +1,8 @@
-package com0.Trello.service;
+package com0.Trello.service.implementation;
 
 import com0.Trello.model.BoardsModel;
 import com0.Trello.repository.BoardsRepository;
+import com0.Trello.service.BoardsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
