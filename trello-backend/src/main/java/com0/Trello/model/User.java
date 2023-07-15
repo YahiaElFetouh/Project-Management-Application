@@ -84,4 +84,12 @@ public class User {
     public void setSecurityAnswer(String securityAnswer) {
         SecurityAnswer = securityAnswer;
     }
+
+    public String getUserName() {
+        return " ";
+    }
+
+    public boolean getSecurityQuestion() {
+        return true;
+    }
 }
