@@ -11,13 +11,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String userName;
 
     private String email;
 
     private String password;
 
+    private String securityQuestion;
 
-    private String SecurityAnswer;
+    private String securityAnswer;
 
     //Might use this code later to join tables
 
@@ -35,12 +37,14 @@ public class User {
 //    List <Workspace> workspaces;
 
 
-    public User(  String email, String password,  String securityAnswer) {
-
+    public User(long id, String userName, String email, String password,  String securityAnswer, String securityQuestion) {
+        this.id = id;
+        this.userName = userName;
         this.email = email;
         this.password = password;
 
-        this.SecurityAnswer = securityAnswer;
+        this.securityAnswer = securityAnswer;
+        this.securityQuestion= securityQuestion;
     }
 
 
@@ -57,7 +61,6 @@ public class User {
     public Long getId() {
         return id;
     }
-
 
 
     public String getEmail() {
@@ -78,18 +81,27 @@ public class User {
 
 
     public String getSecurityAnswer() {
-        return SecurityAnswer;
+        return securityAnswer;
     }
 
     public void setSecurityAnswer(String securityAnswer) {
-        SecurityAnswer = securityAnswer;
+        this.securityAnswer = securityAnswer;
     }
 
     public String getUserName() {
-        return " ";
+        return  userName;
     }
 
-    public boolean getSecurityQuestion() {
-        return true;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+
+
+    public String getSecurityQuestion() {
+        return  this.securityQuestion;
+    }
+    public void setSecurityQuestion(String securityQuestion) {
+        this.securityQuestion = securityQuestion;
     }
 }
