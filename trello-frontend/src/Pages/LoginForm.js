@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import qs from 'qs';
-import './LoginForm.css'
-import ForgotPassword from './ForgotPassword';
+import '../layouts/LoginForm.css'
+import ForgotPassword from '../ForgotPassword';
 const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
