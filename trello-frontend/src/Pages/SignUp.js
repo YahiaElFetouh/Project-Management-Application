@@ -71,7 +71,6 @@ export default function Register() {
                 })
             );
 
-            console.log('dwjdnw')
 
             try {
               fetch('http://localhost:8080/User/save', {
@@ -93,7 +92,7 @@ export default function Register() {
              // Handle error if the registration request fails
          }
 
-         console.log("hehe nhi hua")
+        
 
             
         },
