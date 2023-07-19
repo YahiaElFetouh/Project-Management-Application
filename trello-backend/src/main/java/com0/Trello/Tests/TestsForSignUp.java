@@ -6,8 +6,10 @@ import com0.Trello.repository.UserRepository;
 import com0.Trello.service.UserService;
 import com0.Trello.service.implementation.UserImplementation;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
@@ -16,13 +18,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 public class TestsForSignUp {
     @Mock
     private UserRepository userRepository  ;
     @InjectMocks
     private  UserImplementation userService; // Instantiate the UserService implementation
 
-    @Test
+   @Test
     public void testSignUp_ValidPassword_ReturnsUser() {
         // Arrange
         User user = new User();
