@@ -1,4 +1,4 @@
-package com0.Trello.Tests;
+package com0.Trello;
 
 
 import com0.Trello.model.User;
