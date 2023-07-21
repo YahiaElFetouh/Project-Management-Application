@@ -14,15 +14,15 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
+import org.junit.jupiter:junit-jupiter-engine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 
-import com0.Trello.service.implementation.UserImplementation;
 @RunWith(MockitoJUnitRunner.class)
-public class TestsForSignUp {
+public class UserServiceTest {
     @InjectMocks
     private UserImplementation userService;
 

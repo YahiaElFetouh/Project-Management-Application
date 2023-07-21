@@ -39,21 +39,39 @@ const LoginForm = () => {
         });
 
 
-        axios.post('http://127.0.0.1:8080/UserSignIn/login', data)
-            .then(response => {
-                const data = response.data;
-                if (data.code === 200) {
-                    alert("Login Successful, Welcome!")
+        // axios.post('http://127.0.0.1:8080/UserSignIn/login', data)
+        //     .then(response => {
+        //         const data = response.data;
+        //         if (data.code === 200) {
+        //             alert("Login Successful, Welcome!")
 
-                }else{
-                    alert("Username or Password invalid!")
-                }
-            })
-            .catch(error => {
-                console.log('loginfail', error);
-                alert("Error");
+        //         }else{
+        //             alert("Username or Password invalid!")
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.log('loginfail', error);
+        //         alert("Error");
 
-            });
+        //     });
+        try {
+            fetch('http://localhost:8080/User/login', {
+               method: 'POST',
+               body: JSON.stringify({
+                   username,
+                   password,
+                   
+               }),
+               headers: {
+                   'Content-Type': 'application/json',
+               },
+           });
+   
+          
+       } catch (error) {
+           console.error(error);
+           // Handle error if the registration request fails
+       }
     };
 
     return (
