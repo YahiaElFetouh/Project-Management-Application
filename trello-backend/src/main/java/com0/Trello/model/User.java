@@ -37,14 +37,13 @@ public class User {
 //    List <Workspace> workspaces;
 
 
-    public User(long id, String userName, String email, String password,  String securityAnswer, String securityQuestion) {
-        this.id = id;
-        this.userName = userName;
+    public User(String userName, String email, String password,  String securityAnswer, String securityQuestion) {
+
         this.email = email;
         this.password = password;
 
         this.securityAnswer = securityAnswer;
-        this.securityQuestion= securityQuestion;
+
     }
 
 

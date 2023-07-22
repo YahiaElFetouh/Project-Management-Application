@@ -30,8 +30,8 @@ public class UserImplementation implements UserService {
             }
             return results.get(0);
 
-        }else if (userSignIn.getUserName() != null){
-            List<User> results = userRepository.findUserSignInByUserNameAndPassword(userSignIn.getUserName(), userSignIn.getPassword());
+        }else if (userSignIn.getEmail() != null){
+            List<User> results = userRepository.findUserSignInByUserNameAndPassword(userSignIn.getEmail(), userSignIn.getPassword());
             if (results.isEmpty()){
                 return null;
             }

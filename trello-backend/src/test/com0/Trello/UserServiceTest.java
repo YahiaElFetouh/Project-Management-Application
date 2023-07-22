@@ -1,20 +1,15 @@
-package com0.Trello;
+package java.com0.Trello;
 
 
 import com0.Trello.model.User;
-import com0.Trello.model.UserModel;
 import com0.Trello.repository.UserRepository;
-import com0.Trello.service.UserService;
 import com0.Trello.service.implementation.UserImplementation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.util.Assert;
-import org.junit.jupiter:junit-jupiter-engine;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
