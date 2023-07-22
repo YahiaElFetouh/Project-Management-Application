@@ -59,7 +59,7 @@ const LoginForm = () => {
                method: 'POST',
                body: JSON.stringify({
                    username,
-                   password,
+                   password
                    
                }),
                headers: {
