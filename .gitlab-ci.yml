@@ -1,14 +1,14 @@
 image: maven:latest
 stages:
-- build
-- test
+    - build
+    - test
 build:
-stage: build
-script:
-- cd trello-backend
-- mvn clean compile
+    stage: build
+    script:
+        - cd trello-backend
+        - mvn clean compile
 test:
-stage: test
-script:
-- cd trello-backend
-- mvn clean test
+    stage: test
+    script:
+        - cd trello-backend
+        - mvn clean test
