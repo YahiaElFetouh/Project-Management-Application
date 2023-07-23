@@ -3,13 +3,36 @@ import React, { useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Form, InputGroup } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
-const TaskTable = ({ allTasks, search }) => {
-    const filteredTasks = allTasks.filter(
-      (task) =>
-        task.text.toLowerCase().includes(search.toLowerCase()) ||
-        task.description.toLowerCase().includes(search.toLowerCase())
-    );
-  
+const TaskTable = ({ allTasks, search, filterOption }) => {
+    const filteredTasks = allTasks.filter((task) => {
+        // Apply search filter
+        const isTextMatch =
+          task.text.toLowerCase().includes(search.toLowerCase()) ||
+          task.description.toLowerCase().includes(search.toLowerCase());
+    
+        // Apply due date filter
+        const now = new Date().getTime();
+        const dueDate = new Date(task.dueDate).getTime();
+    
+        if (filterOption === "today") {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          const todayStart = today.getTime();
+          const todayEnd = todayStart + 24 * 60 * 60 * 1000; // Add one day in milliseconds
+          return isTextMatch && dueDate >= todayStart && dueDate < todayEnd;
+        } else if (filterOption === "thisWeek") {
+          const endOfWeek = new Date();
+          endOfWeek.setDate(endOfWeek.getDate() + (7 - endOfWeek.getDay()));
+          endOfWeek.setHours(23, 59, 59, 999);
+          const endOfWeekTime = endOfWeek.getTime();
+          return isTextMatch && dueDate <= endOfWeekTime;
+        } else if (filterOption === "overdue") {
+          return isTextMatch && dueDate < now;
+        }
+    
+        // If no filter option is selected, show all tasks that match the search
+        return isTextMatch;
+      });
       return (
         <Table striped bordered hover>
           <thead>
@@ -43,7 +66,13 @@ const Boards = () => {
     const [taskDescription, setTaskDescription] = useState('');
     const [Date, setDueDate] = useState('');
     const [taskStatus, setStatus] = useState('Todo');
-    const [allTasks, setAllTasks] = useState([]); // Add the allTasks state
+    const [allTasks, setAllTasks] = useState([]); 
+    const [filterOption, setFilterOption] = useState(null); // State to store the filter option
+
+  // Function to handle filter option change
+    const handleFilterChange = (option) => {
+    setFilterOption(option);
+    };
 
     const handleCreateBoard = () => {
         if (boardTitle.trim() !== '') {
@@ -132,7 +161,7 @@ const Boards = () => {
             setTasks(updatedTasks);
         }
     };
-    const statusOptions = ['DueToday', 'Due this week', 'Overdue'];
+    const statusOptions = ['ToDo', 'In Progress', 'Done'];
 
 
     return (
@@ -147,7 +176,13 @@ const Boards = () => {
             />
           </InputGroup>
         </Form>
-        <TaskTable allTasks={allTasks} search={search} />
+        <div>
+        <button onClick={() => handleFilterChange(null)}>All</button>
+        <button onClick={() => handleFilterChange("today")}>Due Today</button>
+        <button onClick={() => handleFilterChange("thisWeek")}>Due This Week</button>
+        <button onClick={() => handleFilterChange("overdue")}>Overdue</button>
+      </div>
+        <TaskTable allTasks={allTasks} search={search} filterOption={filterOption} />
        
 
         <DragDropContext onDragEnd={handleDragEnd}>
