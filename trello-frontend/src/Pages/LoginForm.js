@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import qs from 'qs';
-import '../layouts/LoginForm.css'
-import ForgotPassword from '../ForgotPassword';
+import '../layouts/LoginForm.css';
+import SignUp from './SignUp';
+import ForgotPassword from './ForgotPassword';
+
+
 const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showForgotPassword, setShowForgotPassword] = useState(false);
-
+    const [showSignUp, setShowSignUp] = useState(false);
+    
     const handleForgotPasswordClick = () => {
         setShowForgotPassword(true);
     };
@@ -18,6 +22,18 @@ const LoginForm = () => {
 
     if (showForgotPassword) {
         return <ForgotPassword handleLogin={handleLogin} />;
+    }
+
+    const handleSignUpClick = () => {
+        setShowSignUp(true);
+    };
+
+    const handleSignUp = () => {
+        setShowSignUp(false);
+    };
+
+    if (showSignUp) {
+        return <SignUp handleSignUp={handleSignUp} />;
     }
 
     const handleUsernameChange = (e) => {
@@ -79,6 +95,9 @@ const LoginForm = () => {
                     />
 
                     <button type="submit">Login</button>
+                    <p>
+                        <button onClick={handleSignUpClick}>New User?</button>
+                    </p>
                     <p>
                         <button onClick={handleForgotPasswordClick}>Forgot Password?</button>
                     </p>
