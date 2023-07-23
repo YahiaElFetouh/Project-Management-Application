@@ -74,7 +74,7 @@ export default function Register() {
             console.log('dwjdnw')
 
             try {
-              fetch('http://localhost:8080/User/save', {
+              fetch('http://localhost:3000/User/save', {
                  method: 'POST',
                  body: JSON.stringify({
                      email,
