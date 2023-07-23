@@ -1,61 +1,62 @@
-// import * as Yup from "yup";
-// import { Form, FormikProvider, useFormik } from "formik";
-// import { LoadingButton } from "@mui/lab";
-// import {
-//   Container,Stack,TextField,Box,Typography} from "@mui/material";
-//   import React, { useState } from 'react';
-//
-//
-//
-// export default function Boards() {
-//
-//
-//
-//     const [cards, setCards] = useState([]);
-//
-//     const addCard = () => {
-//       const createNewCards = [...cards, <div key={cards.length} >New Card</div>];
-//       setCards(createNewCards);
-//     };
-//
-// // in this code, new divs are created when the button is clicked. New divs are basically cards, which will later on
-// // have tasks in it
-//   return (
-//     <div>
-//       <button class ="div-wrapper" onClick={addCard}>Create a new card</button>
-//
-//       {/* I have used the following resources to learn about map():
-//       1) https://stackoverflow.com/questions/69065759/create-div-using-button-react
-//       2) https://www.w3schools.com/js/js_maps.asp */}
-//       {cards.map((cards) => cards)}
-//     </div>
-//   );
-// }
-//
-//
-//
-//
-//
+
 import React, { useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { Form, InputGroup } from 'react-bootstrap';
+import Table from 'react-bootstrap/Table';
+const TaskTable = ({ allTasks, search }) => {
+    const filteredTasks = allTasks.filter(
+      (task) =>
+        task.text.toLowerCase().includes(search.toLowerCase()) ||
+        task.description.toLowerCase().includes(search.toLowerCase())
+    );
+  
+      return (
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Description</th>
+              <th>Due date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredTasks.map((task, index) => (
+              <tr key={index}>
+                <td>{task.text}</td>
+                <td>{task.description}</td>
+                <td>{task.dueDate}</td>
+                <td>{task.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      );
+    };
 
 const Boards = () => {
+    const [search, setSearch] = useState('');
     const [boards, setBoards] = useState([]);
     const [boardTitle, setBoardTitle] = useState('');
-    const [tasks, setTasks] = useState({});
+    const [tasks, setTasks] = useState([]);
     const [taskText, setTaskText] = useState('');
     const [taskDescription, setTaskDescription] = useState('');
+    const [Date, setDueDate] = useState('');
+    const [taskStatus, setStatus] = useState('Todo');
+    const [allTasks, setAllTasks] = useState([]); // Add the allTasks state
 
     const handleCreateBoard = () => {
         if (boardTitle.trim() !== '') {
-            setBoards([...boards, boardTitle]);
-            setTasks({
-                ...tasks,
-                [boards.length]: [],
-            });
-            setBoardTitle('');
+          // Create a new board object with an empty tasks array
+          const newBoard = { title: boardTitle, tasks: [] };
+      
+          // Update the boards state by adding the new board object
+          setBoards([...boards, newBoard]);
+      
+          // Clear the input field after adding the board
+          setBoardTitle('');
         }
-    };
+      };
 
     const handleDeleteBoard = (index) => {
         const updatedBoards = boards.filter((_, idx) => idx !== index);
@@ -69,23 +70,38 @@ const Boards = () => {
 
     const handleAddTask = (index) => {
         if (taskText.trim() !== '') {
-            setTasks({
-                ...tasks,
-                [index]: [
-                    ...(tasks[index] || []),
-                    { text: taskText, description: taskDescription },
-                ],
-            });
-            setTaskText('');
-            setTaskDescription('');
+          const newTask = { text: taskText, description: taskDescription, dueDate: Date, status: taskStatus};
+          
+          // Create a copy of the boards state
+          const updatedBoards = [...boards];
+          
+          // Push the new task to the specified board's tasks array
+          updatedBoards[index].tasks.push(newTask);
+          
+          // Update the boards state with the modified board object
+          setBoards(updatedBoards);
+      
+          // Add the new task to the allTasks state
+          setAllTasks([...allTasks, newTask]);
+      
+          // Clear the input fields after adding the task
+          setTaskText('');
+          setTaskDescription('');
+          setDueDate('');
+          setStatus('Todo'); 
         }
-    };
-
-    const handleDeleteTask = (boardIndex, taskIndex) => {
+      };
+      
+      const handleDeleteTask = (boardIndex, taskIndex) => {
         const updatedTasks = { ...tasks };
-        updatedTasks[boardIndex].splice(taskIndex, 1);
-        setTasks(updatedTasks);
-    };
+      
+        // Check if the boardIndex exists in the updatedTasks object
+        if (updatedTasks[boardIndex]) {
+          updatedTasks[boardIndex].splice(taskIndex, 1);
+          setTasks(updatedTasks);
+        }
+      };
+      
 
     const handleEditBoard = (index, newTitle) => {
         const updatedBoards = [...boards];
@@ -116,95 +132,125 @@ const Boards = () => {
             setTasks(updatedTasks);
         }
     };
+    const statusOptions = ['DueToday', 'Due this week', 'Overdue'];
+
 
     return (
-        <DragDropContext onDragEnd={handleDragEnd}>
-            <div>
-                <div>
-                    <h2>Create a new board</h2>
-                    <input
-                        type="text"
-                        value={boardTitle}
-                        onChange={(e) => setBoardTitle(e.target.value)}
-                        placeholder="Enter board title"
-                    />
-                    <button onClick={handleCreateBoard}>Create Board</button>
-                </div>
+        
+        <>
+        <Form>
+          <InputGroup className='my-3'>
+            {/* onChange for search */}
+            <Form.Control
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder='Search Tasks'
+            />
+          </InputGroup>
+        </Form>
+        <TaskTable allTasks={allTasks} search={search} />
+       
 
-                {boards.map((board, index) => (
-                    <Droppable droppableId={index.toString()} key={index}>
-                        {(provided) => (
-                            <div
+        <DragDropContext onDragEnd={handleDragEnd}>
+                <div>
+                    <div>
+                        <h2>Create a new board</h2>
+                        <input
+                            type="text"
+                            value={boardTitle}
+                            onChange={(e) => setBoardTitle(e.target.value)}
+                            placeholder="Enter board title" />
+                        <button onClick={handleCreateBoard}>Create Board</button>
+                    </div>
+
+                    {boards.map((board, index) => (
+            <Droppable droppableId={index.toString()} key={index}>
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className="board"
+                >
+                  <input
+                    type="text"
+                    value={board.title} // Access the board's title
+                    onChange={(e) => handleEditBoard(index, e.target.value)}
+                  />
+                  <button onClick={() => handleDeleteBoard(index)}>
+                    Delete Board
+                  </button>
+                  <div>
+                    <input
+                      type="text"
+                      value={taskText}
+                      onChange={(e) => setTaskText(e.target.value)}
+                      placeholder="Enter task"
+                    />
+                    <input
+                      type="text"
+                      value={taskDescription}
+                      onChange={(e) => setTaskDescription(e.target.value)}
+                      placeholder="Enter task description"
+                    />
+                    <input
+                      type="Date"
+                      value={Date}
+                      onChange={(e) => setDueDate(e.target.value)}
+                      placeholder="Enter Due Date"
+                    />
+                     <select value={taskStatus} onChange={(e) => setStatus(e.target.value)}>
+                     {statusOptions.map((status) => (
+                     <option key={status} value={status}>
+                      {status}
+                    </option>
+                  ))}
+                </select>
+                    <button onClick={() => handleAddTask(index)}>
+                      Add Task
+                    </button>
+                  </div>
+                  {/* Access the tasks array of the board */}
+                  <Droppable droppableId={`tasks-${index}`} key={`tasks-${index}`}>
+                    {(provided) => (
+                      <ul ref={provided.innerRef} {...provided.droppableProps}>
+                        {board.tasks.map((task, taskIndex) => ( // Map through the tasks array
+                          <Draggable
+                            key={taskIndex}
+                            draggableId={`task-${index}-${taskIndex}`}
+                            index={taskIndex}
+                          >
+                            {(provided) => (
+                              <li
                                 ref={provided.innerRef}
-                                {...provided.droppableProps}
-                                className="board"
-                            >
-                                <input
-                                    type="text"
-                                    value={board}
-                                    onChange={(e) => handleEditBoard(index, e.target.value)}
-                                />
-                                <button onClick={() => handleDeleteBoard(index)}>
-                                    Delete Board
-                                </button>
-                                <div>
-                                    <input
-                                        type="text"
-                                        value={taskText}
-                                        onChange={(e) => setTaskText(e.target.value)}
-                                        placeholder="Enter task"
-                                    />
-                                    <input
-                                        type="text"
-                                        value={taskDescription}
-                                        onChange={(e) => setTaskDescription(e.target.value)}
-                                        placeholder="Enter task description"
-                                    />
-                                    <button onClick={() => handleAddTask(index)}>Add Task</button>
-                                </div>
-                                <Droppable droppableId={`tasks-${index}`} key={`tasks-${index}`}>
-                                    {(provided) => (
-                                        <ul ref={provided.innerRef} {...provided.droppableProps}>
-                                            {tasks[index] &&
-                                                tasks[index].map((task, taskIndex) => (
-                                                    <Draggable
-                                                        key={taskIndex}
-                                                        draggableId={`task-${index}-${taskIndex}`}
-                                                        index={taskIndex}
-                                                    >
-                                                        {(provided) => (
-                                                            <li
-                                                                ref={provided.innerRef}
-                                                                {...provided.draggableProps}
-                                                                {...provided.dragHandleProps}
-                                                            >
-                                                                <span>{task.text}</span>
-                                                                {task.description && (
-                                                                    <span className="task-description">
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                              >
+                                <span>{task.text}</span>
+                                {task.description && (
+                                  <span className="task-description">
                                     {task.description}
                                   </span>
-                                                                )}
-                                                                <button
-                                                                    onClick={() => handleDeleteTask(index, taskIndex)}
-                                                                >
-                                                                    Delete Task
-                                                                </button>
-                                                            </li>
-                                                        )}
-                                                    </Draggable>
-                                                ))}
-                                            {provided.placeholder}
-                                        </ul>
-                                    )}
-                                </Droppable>
-                            </div>
-                        )}
-                    </Droppable>
-                ))}
-            </div>
-        </DragDropContext>
-    );
+                                )}
+                                <button
+                                  onClick={() => handleDeleteTask(index, taskIndex)}
+                                >
+                                  Delete Task
+                                </button>
+                              </li>
+                            )}
+                          </Draggable>
+                        ))}
+                        {provided.placeholder}
+                      </ul>
+                    )}
+                  </Droppable>
+                </div>
+              )}
+            </Droppable>
+          ))}
+        </div>
+      </DragDropContext>
+    </>
+  );
 };
 
 export default Boards;
-
