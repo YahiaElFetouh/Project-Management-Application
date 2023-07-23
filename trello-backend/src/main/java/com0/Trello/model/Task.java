@@ -1,6 +1,7 @@
 package com0.Trello.model;
 
 import jakarta.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "Task")
@@ -15,6 +16,48 @@ public class Task {
     private String status;
     @Column(name = "board_id", nullable = false)
     private Integer boardId;
+    @Column(name = "due_date", nullable = false)
+    private Date due_date;
+    public Integer getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setDueDate(Date due_date) {
+        this.due_date = due_date;
+    }
+
+    public void setBoardId(Integer boardId) {
+        this.boardId = boardId;
+    }
+
+    public Date getDueDate() {
+        return due_date;
+    }
+
+    public Integer getBoardId() {
+        return boardId;
+    }
+
 
 }
 
