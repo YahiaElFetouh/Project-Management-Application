@@ -39,10 +39,11 @@ public class UserController {
     public ResultVO<String> userLogin(@RequestParam String email, @RequestParam String password){
         User userSignIn = new User();
         userSignIn.setEmail(email);
+        int code =5001;
         userSignIn.setPassword(password);
         User result = userService.logIn(userSignIn);
         if (result == null){
-            return new ResultVO<String>(5001, "Error!", "Username or Password invalid!");
+            return new ResultVO<String>(code, "Error!", "Username or Password invalid!");
         }
         else {
             return new ResultVO<>("Login Successful, Welcome!");

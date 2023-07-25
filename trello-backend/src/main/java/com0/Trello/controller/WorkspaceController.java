@@ -14,14 +14,17 @@ public class WorkspaceController {
     private WorkspaceService workspaceService;
     @PostMapping("/createWorkspace")
     public ResultVO<Workspace> createWorkspace(@RequestBody Workspace workspace){
+        int codeSaved = 40001;
+        int codeNew = 200;
+
         try {
             Workspace saved = workspaceService.createWorkspace(workspace);
             if (saved == null){
-                return new ResultVO<>(40001, "create error!", null);
+                return new ResultVO<>(codeSaved, "create error!", null);
             }
-            return new ResultVO<>(200, "create ok!", saved);
+            return new ResultVO<>(codeNew, "create ok!", saved);
         }catch (Exception e){
-            return new ResultVO<>(40001, "create error: " + e.getMessage(), null);
+            return new ResultVO<>(codeSaved, "create error: " + e.getMessage(), null);
         }
     }
     @PutMapping("/{id}")

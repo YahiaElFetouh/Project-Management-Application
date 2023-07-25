@@ -86,7 +86,9 @@ public class UserImplementation implements UserService {
     private boolean passwordCheck(String password) {
         boolean correctPass = true;
 
-        if(password.length()<7){
+        int passwordLength =7;
+
+        if(password.length()<passwordLength){
             System.out.println("Password should be at least 8 characters long");
             return false;
 

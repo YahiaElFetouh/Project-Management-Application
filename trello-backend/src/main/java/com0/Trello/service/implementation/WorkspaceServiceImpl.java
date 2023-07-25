@@ -19,9 +19,12 @@ public class WorkspaceServiceImpl implements WorkspaceService {
         return workspaceRepository.save(workspace);
     }
     public ResultVO<Workspace> updateWorkspaceDetails(Long id, Workspace workspace){
+        int fail = 404;
+        int success = 200;
         Optional<Workspace> fetchWorkSpace =  workspaceRepository.findById(Math.toIntExact(id));
         if(!fetchWorkSpace.isPresent()){
-            return new ResultVO(404, "Couldn't find workspace", null );
+
+            return new ResultVO(fail, "Couldn't find workspace", null );
         }
         Workspace foundWorkSpace = fetchWorkSpace.get();
         foundWorkSpace.setName(workspace.getName());
@@ -30,7 +33,7 @@ public class WorkspaceServiceImpl implements WorkspaceService {
         foundWorkSpace = workspaceRepository.save(foundWorkSpace);
 
 
-       return new ResultVO (200,"Updated succesully", foundWorkSpace);
+       return new ResultVO (success,"Updated succesully", foundWorkSpace);
 
     }
 }

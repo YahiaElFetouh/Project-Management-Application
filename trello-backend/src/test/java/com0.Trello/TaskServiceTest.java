@@ -1,5 +1,6 @@
 package com0.Trello.test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com0.Trello.model.Task;
 import com0.Trello.repository.TaskRepository;
 import com0.Trello.service.TaskService;
@@ -31,7 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
-import java.util.Date;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -49,8 +50,14 @@ class TaskServiceTest {
 
     @Test
     void createAndChangeTaskOk() throws Exception {
-        String contents = "{\"taskId\": 33283, \"taskName\": \"front\", \"status\": \"Completed\", \"boardId\": 44}";
-        mockMvc.perform(MockMvcRequestBuilders
+        Map<String, Object> taskData = new HashMap<>();
+        taskData.put("taskId", 33283);
+        taskData.put("taskName", "front");
+        taskData.put("status", "Completed");
+        taskData.put("boardId", 44);
+
+// Convert the Map to a JSON string
+        String contents = new ObjectMapper().writeValueAsString(taskData);        mockMvc.perform(MockMvcRequestBuilders
                         .post("/task/createAndChangeTask")
                         .content(contents)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -60,7 +67,13 @@ class TaskServiceTest {
 
     @Test
     void createAndChangeTaskFail() throws Exception {
-        String contents = "{\"taskId\": 33283, \"taskName\": \"front\", \"boardId\": 44}";
+        Map<String, Object> taskData = new HashMap<>();
+        taskData.put("taskId", 33283);
+        taskData.put("taskName", "front");
+        taskData.put("boardId", 44);
+
+// Convert the Map to a JSON string using the ObjectMapper
+        String contents = new ObjectMapper().writeValueAsString(taskData);
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/task/createAndChangeTask")
                         .content(contents)
@@ -71,9 +84,17 @@ class TaskServiceTest {
 
     @Test
     void createAndChangeTasksOk() throws Exception {
-        String contents = "[{\"taskId\": 33283, \"taskName\": \"front\", \"status\": \"Completed\", \"boardId\": 44}," +
-                "{\"taskId\": 50110, \"taskName\": \"those\", \"status\": \"Completed\", \"boardId\": 2021}," +
-                "{\"taskId\": 19459, \"taskName\": \"become\", \"status\": \"Pending\", \"boardId\": 1916}]";
+        List<Task> tasks = new ArrayList<>();
+
+
+        tasks.add(new Task(33283, "front", "Completed", 44));
+        tasks.add(new Task(50110, "those", "Completed", 2021));
+        tasks.add(new Task(19459, "become", "Pending", 1916));
+
+
+        String contents = new ObjectMapper().writeValueAsString(tasks);
+
+
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/task/createAndChangeTasks")
                         .content(contents)
@@ -84,9 +105,19 @@ class TaskServiceTest {
 
     @Test
     void createAndChangeTasksFail() throws Exception {
-        String contents = "[{\"taskId\": 33283, \"taskName\": \"front\",  \"boardId\": 44}," +
-                "{\"taskId\": 50110,  \"status\": \"Completed\", \"boardId\": 2021}," +
-                "{\"taskId\": 19459, \"taskName\": \"become\",  \"boardId\": 1916}]";
+        List<Task> tasks = new ArrayList<>();
+
+// Create Task objects for each task data and add them to the list
+        tasks.add(new Task(33283, "front", null, 44)); // The "status" attribute is optional and set to null
+        tasks.add(new Task(50110, null, "Completed", 2021)); // The "taskName" attribute is optional and set to null
+        tasks.add(new Task(19459, "become", null, 1916)); // The "status" attribute is optional and set to null
+
+
+
+// Use the JSON string in the perform() method
+        String contents = new ObjectMapper().writeValueAsString(tasks);
+
+// Use the JSON string in the perform() method
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/task/createAndChangeTasks")
                         .content(contents)
