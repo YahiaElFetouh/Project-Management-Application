@@ -2,25 +2,18 @@ package com0.Trello;
 
 
 import com0.Trello.model.User;
-
 import com0.Trello.repository.UserRepository;
-import com0.Trello.service.UserService;
 import com0.Trello.service.implementation.UserImplementation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.util.Assert;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
-
-import com0.Trello.service.implementation.UserImplementation;
+import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class TestsForSignUp {
     @InjectMocks
@@ -50,7 +43,7 @@ public class TestsForSignUp {
     @Test
     public void create_user_test() throws Exception {
         // Create the User instance
-        Long id = 5L;
+        int id = 5;
         User user = new User();
         user.setId(id);
         user.setEmail("foo@bar.ca");

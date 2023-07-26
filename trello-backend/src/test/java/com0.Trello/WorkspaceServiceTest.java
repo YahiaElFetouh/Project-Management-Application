@@ -1,4 +1,4 @@
-package com0.Trello.test;
+package com0.Trello;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

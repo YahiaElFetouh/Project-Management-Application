@@ -10,7 +10,7 @@ public interface TaskService {
     List<Task> getAllTasks();
 
     Task getTaskById(Integer taskId);
-
+    Task assignMemberToTask(Integer taskId, int userId);
 
 
     Task saveTask(Task task);

@@ -5,10 +5,10 @@ import com0.Trello.model.ResultVO;
 import com0.Trello.model.Task;
 import com0.Trello.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+
+
 
 import java.util.List;
 
@@ -17,6 +17,12 @@ import java.util.List;
 public class TaskController {
     @Autowired
     TaskService taskService;
+
+    @Autowired
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
 
     @PostMapping("/createAndChangeTasks")
     public ResultVO<String> createAndChangeTasks(@RequestBody List<Task> tasks){
@@ -38,5 +44,18 @@ public class TaskController {
             return new ResultVO<>("Fail!");
         }
     }
+
+    @GetMapping("/fetch")
+    public List<Task> getAllUsers(){
+        return taskService.getAllTasks();
+    }
+
+
+    @PostMapping("/{taskId}/assign-member/{userId}")
+    public ResponseEntity<Task> assignMemberToTask(@PathVariable Integer taskId, @PathVariable int userId) {
+        Task assignedTask = taskService.assignMemberToTask(taskId, userId);
+        return ResponseEntity.ok(assignedTask);
+    }
+
 
 }

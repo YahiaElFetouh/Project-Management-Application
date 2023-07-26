@@ -19,6 +19,11 @@ public class Task {
     @Column(name = "due_date", nullable = false)
     private Date due_date;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
     public Task() {
     }
 
@@ -27,6 +32,14 @@ public class Task {
         this.taskName = taskName;
         this.status = status;
         this.boardId = boardId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getTaskId() {
