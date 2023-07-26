@@ -1,84 +1,14 @@
 import React, { useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import TaskTable from './TaskTable';
 import { Form, InputGroup } from 'react-bootstrap';
-import {Table} from "react-bootstrap";
+import Table from 'react-bootstrap/Table';
 
-const Boards = () => {
-    const [search, setSearch] = useState('');
-    const [boards, setBoards] = useState([]);
-    const [boardTitle, setBoardTitle] = useState('');
-    const [tasks, setTasks] = useState([]);
-    const [taskText, setTaskText] = useState('');
-    const [taskDescription, setTaskDescription] = useState('');
-    const [dueDate, setDueDate] = useState('');
-    const [taskStatus, setTaskStatus] = useState('Todo');
-    const [allTasks, setAllTasks] = useState([]); // Add the allTasks state
-    const [sortOption, setSortOption] = useState('newest');
-
-    // Helper function to create a new board
-    const handleCreateBoard = () => {
-        if (boardTitle.trim() !== '') {
-            const newBoard = { title: boardTitle, tasks: [] };
-            setBoards([...boards, newBoard]);
-            setBoardTitle('');
-        }
-    };
-
-    // Helper function to delete a board and its associated tasks
-    const handleDeleteBoard = (index) => {
-        const updatedBoards = boards.filter((_, idx) => idx !== index);
-        setBoards(updatedBoards);
-
-        // Also delete tasks associated with this board
-        const updatedTasks = { ...tasks };
-        delete updatedTasks[index];
-        setTasks(updatedTasks);
-    };
-
-    // Helper function to add a new task to a board
-    const handleAddTask = (index) => {
-        if (taskText.trim() !== '') {
-            const newTask = {
-                text: taskText,
-                description: taskDescription,
-                dueDate: dueDate,
-                status: taskStatus,
-            };
-
-            const updatedBoards = [...boards];
-            updatedBoards[index].tasks.push(newTask);
-            setBoards(updatedBoards);
-
-            setAllTasks([...allTasks, newTask]);
-
-            setTaskText('');
-            setTaskDescription('');
-            setDueDate('');
-            setTaskStatus('Todo');
-        }
-    };
-    const handleSortChange = (option) => {
-        setSortOption(option);
-    };
-    const handleDragEnd = (result) => {
-        // ... (Your drag and drop logic here)
-        // This function should handle the reordering of tasks after drag and drop.
-        // It will be called automatically when a drag and drop action is completed.
-    };
-
-
-    const statusOptions = ['DueToday', 'Due this week', 'Overdue'];
-
-    const filteredTasks = search
-        ? boards.flatMap((board, boardIndex) =>
-            board.tasks.filter(
-                (task) =>
-                    task.text.toLowerCase().includes(search.toLowerCase()) ||
-                    task.description.toLowerCase().includes(search.toLowerCase())
-            )
-        )
-        : allTasks.flatMap((boardTasks) => boardTasks);
+const TaskTable = ({ allTasks, search, sortOption, handleSortChange, statusOptions }) => {
+    const filteredTasks = allTasks.filter(
+        (task) =>
+            task.text.toLowerCase().includes(search.toLowerCase()) ||
+            task.description.toLowerCase().includes(search.toLowerCase())
+    );
 
     const sortedTasks = [...filteredTasks].sort((task1, task2) => {
         if (sortOption === 'newest') {
@@ -89,32 +19,163 @@ const Boards = () => {
             return task1.text.localeCompare(task2.text);
         }
     });
-    const handleEditBoard = (index, newTitle) => {
-        const updatedBoards = [...boards];
-        updatedBoards[index].title = newTitle;
-        setBoards(updatedBoards);
-    };
-    const handleDeleteTask = (boardIndex, taskIndex) => {
-        const updatedBoards = [...boards];
-        updatedBoards[boardIndex].tasks.splice(taskIndex, 1);
-        setBoards(updatedBoards);
-    };
-
 
     return (
         <>
+            <Form.Group controlId="sortOption">
+                <Form.Label>Sort Tasks:</Form.Label>
+                <Form.Control as="select" value={sortOption} onChange={(e) => handleSortChange(e.target.value)}>
+                    <option value="newest">Newest</option>
+                    <option value="oldest">Oldest</option>
+                    <option value="relevant">Most Relevant</option>
+                </Form.Control>
+            </Form.Group>
 
+            <Table striped bordered hover>
+                <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Description</th>
+                    <th>Due date</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                {sortedTasks.map((task, index) => (
+                    <tr key={index}>
+                        <td>{task.text}</td>
+                        <td>{task.description}</td>
+                        <td>{task.dueDate}</td>
+                        <td>{task.status}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </Table>
+        </>
+    );
+};
+
+const Boards = () => {
+    const [search, setSearch] = useState('');
+    const [boards, setBoards] = useState([]);
+    const [boardTitle, setBoardTitle] = useState('');
+    const [tasks, setTasks] = useState([]);
+    const [taskText, setTaskText] = useState('');
+    const [taskDescription, setTaskDescription] = useState('');
+    const [Date, setDueDate] = useState('');
+    const [taskStatus, setStatus] = useState('Todo');
+    const [allTasks, setAllTasks] = useState([]); // Add the allTasks state
+    const [sortOption, setSortOption] = useState('newest');
+
+    const handleCreateBoard = () => {
+        if (boardTitle.trim() !== '') {
+            // Create a new board object with an empty tasks array
+            const newBoard = { title: boardTitle, tasks: [] };
+
+            // Update the boards state by adding the new board object
+            setBoards([...boards, newBoard]);
+
+            // Clear the input field after adding the board
+            setBoardTitle('');
+        }
+    };
+
+    const handleDeleteBoard = (index) => {
+        const updatedBoards = boards.filter((_, idx) => idx !== index);
+        setBoards(updatedBoards);
+
+        // Also delete tasks associated with this board
+        const updatedTasks = { ...tasks };
+        delete updatedTasks[index];
+        setTasks(updatedTasks);
+    };
+
+    const handleAddTask = (index) => {
+        if (taskText.trim() !== '') {
+            const newTask = { text: taskText, description: taskDescription, dueDate: Date, status: taskStatus };
+
+            // Create a copy of the boards state
+            const updatedBoards = [...boards];
+
+            // Push the new task to the specified board's tasks array
+            updatedBoards[index].tasks.push(newTask);
+
+            // Update the boards state with the modified board object
+            setBoards(updatedBoards);
+
+            // Add the new task to the allTasks state
+            setAllTasks([...allTasks, newTask]);
+
+            // Clear the input fields after adding the task
+            setTaskText('');
+            setTaskDescription('');
+            setDueDate('');
+            setStatus('Todo');
+        }
+    };
+
+    const handleDeleteTask = (boardIndex, taskIndex) => {
+        const updatedTasks = { ...tasks };
+
+        // Check if the boardIndex exists in the updatedTasks object
+        if (updatedTasks[boardIndex]) {
+            updatedTasks[boardIndex].splice(taskIndex, 1);
+            setTasks(updatedTasks);
+        }
+    };
+
+
+    const handleEditBoard = (index, newTitle) => {
+        const updatedBoards = [...boards];
+        updatedBoards[index] = newTitle;
+        setBoards(updatedBoards);
+    };
+
+    const handleDragEnd = (result) => {
+        if (!result.destination) return; // Item was not dropped in a valid drop area
+
+        const { source, destination } = result;
+
+        if (source.droppableId === destination.droppableId) {
+            // Reorder tasks in the same board
+            const updatedTasks = { ...tasks };
+            const boardIndex = Number(source.droppableId);
+            const [movedTask] = updatedTasks[boardIndex].splice(source.index, 1);
+            updatedTasks[boardIndex].splice(destination.index, 0, movedTask);
+            setTasks(updatedTasks);
+        } else {
+            // Move task to another board
+            const sourceBoardIndex = Number(source.droppableId);
+            const destBoardIndex = Number(destination.droppableId);
+
+            const updatedTasks = { ...tasks };
+            const [movedTask] = updatedTasks[sourceBoardIndex].splice(source.index, 1);
+            updatedTasks[destBoardIndex].splice(destination.index, 0, movedTask);
+            setTasks(updatedTasks);
+        }
+    };
+
+    const statusOptions = ['DueToday', 'Due this week', 'Overdue'];
+
+    return (
+        <>
             <Form>
                 <InputGroup className="my-3">
+                    {/* onChange for search */}
                     <Form.Control
                         onChange={(e) => setSearch(e.target.value)}
                         placeholder="Search Tasks"
                     />
                 </InputGroup>
             </Form>
-            <TaskTable allTasks={allTasks} search={search} />
+            <TaskTable
+                allTasks={allTasks}
+                search={search}
+                sortOption={sortOption}
+                handleSortChange={setSortOption}
+                statusOptions={statusOptions}
+            />
 
-            {/* Drag and Drop Context */}
             <DragDropContext onDragEnd={handleDragEnd}>
                 <div>
                     <div>
@@ -128,7 +189,6 @@ const Boards = () => {
                         <button onClick={handleCreateBoard}>Create Board</button>
                     </div>
 
-                    {/* Map through boards to display each board */}
                     {boards.map((board, index) => (
                         <Droppable droppableId={index.toString()} key={index}>
                             {(provided) => (
@@ -146,7 +206,6 @@ const Boards = () => {
                                         Delete Board
                                     </button>
                                     <div>
-                                        {/* Input fields for task creation */}
                                         <input
                                             type="text"
                                             value={taskText}
@@ -161,13 +220,13 @@ const Boards = () => {
                                         />
                                         <input
                                             type="Date"
-                                            value={dueDate}
+                                            value={Date}
                                             onChange={(e) => setDueDate(e.target.value)}
                                             placeholder="Enter Due Date"
                                         />
                                         <select
                                             value={taskStatus}
-                                            onChange={(e) => setTaskStatus(e.target.value)}
+                                            onChange={(e) => setStatus(e.target.value)}
                                         >
                                             {statusOptions.map((status) => (
                                                 <option key={status} value={status}>
@@ -179,15 +238,11 @@ const Boards = () => {
                                             Add Task
                                         </button>
                                     </div>
-
-                                    {/* Access the tasks array of the board and map through it */}
-                                    <Droppable
-                                        droppableId={`tasks-${index}`}
-                                        key={`tasks-${index}`}
-                                    >
+                                    {/* Access the tasks array of the board */}
+                                    <Droppable droppableId={`tasks-${index}`} key={`tasks-${index}`}>
                                         {(provided) => (
                                             <ul ref={provided.innerRef} {...provided.droppableProps}>
-                                                {board.tasks.map((task, taskIndex) => (
+                                                {board.tasks.map((task, taskIndex) => ( // Map through the tasks array
                                                     <Draggable
                                                         key={taskIndex}
                                                         draggableId={`task-${index}-${taskIndex}`}
@@ -206,9 +261,7 @@ const Boards = () => {
                                   </span>
                                                                 )}
                                                                 <button
-                                                                    onClick={() =>
-                                                                        handleDeleteTask(index, taskIndex)
-                                                                    }
+                                                                    onClick={() => handleDeleteTask(index, taskIndex)}
                                                                 >
                                                                     Delete Task
                                                                 </button>
@@ -231,7 +284,3 @@ const Boards = () => {
 };
 
 export default Boards;
-
-
-
-
