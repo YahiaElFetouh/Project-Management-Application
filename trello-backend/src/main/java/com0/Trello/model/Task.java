@@ -17,6 +17,8 @@ public class Task {
         @Column(name = "board_id", nullable = false)
         private Integer boardId;
 
+        @ManyToOne
+        @JoinColumn(name = "user_id")
         private User user;
 
         public Task() {
@@ -24,6 +26,10 @@ public class Task {
 
         public User getUser() {
                 return user;
+        }
+
+        public void setUser(User user) {
+                this.user = user;
         }
 
         public Integer getTaskId() {

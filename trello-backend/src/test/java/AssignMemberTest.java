@@ -3,10 +3,10 @@ import com0.Trello.model.User;
 import com0.Trello.repository.TaskRepository;
 import com0.Trello.repository.UserRepository;
 import com0.Trello.service.implementation.TaskServiceImpl;
-import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.junit.Test;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Optional;
@@ -33,14 +33,14 @@ public class AssignMemberTest {
             task.setTaskName("Sample Task");
 
             User user = new User();
-            user.setId(1L);
+            user.setId(1);
             user.setUserName("John Doe");
 
             when(taskRepository.findById(1)).thenReturn(Optional.of(task));
             when(userRepository.findById(1)).thenReturn(Optional.of(user));
             when(taskRepository.save(task)).thenReturn(task);
 
-            Task assignedTask = taskService.assignMemberToTask(1, 1L);
+            Task assignedTask = this.taskService.assignMemberToTask(1, 1);
 
             assertNotNull(assignedTask);
             assertEquals(1L, assignedTask.getTaskId().longValue());

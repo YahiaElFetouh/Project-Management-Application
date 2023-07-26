@@ -8,6 +8,7 @@ import java.util.List;
 public interface TaskService {
     boolean createAndChangeTasks(List<Task> tasks);
     Task createAndChangeTask(Task task);
-    Task assignMemberToTask(Integer taskId, Long userId);
+    Task assignMemberToTask(Integer taskId, int userId);
+    List<Task> getAllTasks();
 
 }

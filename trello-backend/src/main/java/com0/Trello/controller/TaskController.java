@@ -42,11 +42,15 @@ public class TaskController {
         }
     }
 
-    @PostMapping("/{taskId}/assign-member/{userId}")
-    public ResponseEntity<Task> assignMemberToTask(@PathVariable Integer taskId, @PathVariable Long userId) {
-        Task assignedTask = taskService.assignMemberToTask(taskId, userId);
-        return ResponseEntity.ok(assignedTask);
+    @GetMapping("/fetch")
+    public List<Task> getAllUsers(){
+        return taskService.getAllTasks();
     }
 
 
+    @PostMapping("/{taskId}/assign-member/{userId}")
+    public ResponseEntity<Task> assignMemberToTask(@PathVariable Integer taskId, @PathVariable int userId) {
+        Task assignedTask = taskService.assignMemberToTask(taskId, userId);
+        return ResponseEntity.ok(assignedTask);
+    }
 }
