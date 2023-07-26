@@ -1,45 +1,19 @@
-Project Name,Package Name,Type Name,Method Name,Code Smell
-group06,com0.Trello.controller,UserController,userLogin,Magic Number
-group06,com0.Trello.controller,WorkspaceController,createWorkspace,Magic Number
-group06,com0.Trello.controller,WorkspaceController,createWorkspace,Magic Number
-group06,com0.Trello.model,ResultVO,ResultVO,Magic Number
-group06,com0.Trello.model,User,User,Long Parameter List
-group06,com0.Trello.service.implementation,UserImplementation,logIn,Long Statement
-group06,com0.Trello.service.implementation,UserImplementation,passwordCheck,Magic Number
-group06,com0.Trello.service.implementation,WorkspaceServiceImpl,updateWorkspaceDetails,Magic Number
-group06,com0.Trello.service.implementation,WorkspaceServiceImpl,updateWorkspaceDetails,Magic Number
-group06,com0.Trello,TestsForSignUp,create_user_test,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTaskOk,Long Statement
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTaskOk,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTaskOk,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTaskFail,Long Statement
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTaskFail,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTaskFail,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksOk,Long Statement
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksOk,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksOk,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksOk,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksOk,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksOk,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksOk,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksFail,Long Statement
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksFail,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksFail,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksFail,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksFail,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksFail,Magic Number
-group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksFail,Magic Number
-group06,com0.Trello.test,UserServiceTest,userLoginSuccess,Long Statement
-group06,com0.Trello.test,UserServiceTest,userLoginFail,Long Statement
-group06,com0.Trello.test,UserServiceTest,userLoginFail,Long Statement
-group06,com0.Trello.test,UserServiceTest,userLoginFail,Long Statement
-group06,com0.Trello.test,UserServiceTest,userLoginIsNotOK,Long Statement
-group06,com0.Trello.test,UserServiceTest,userLoginIsNotOK,Long Statement
-group06,com0.Trello.test,UserServiceTest,userLoginIsNotOK,Long Statement
-group06,com0.Trello.test,UserServiceTest,userLoginIsNotOKWithError,Long Statement
-group06,com0.Trello.test,UserServiceTest,userLoginIsNotOKWithError,Long Statement
-group06,com0.Trello.test,UserServiceTest,userLoginIsNotOKWithError,Long Statement
-group06,com0.Trello.test,WorkspaceServiceTest,createWorkspaceOk,Long Statement
-group06,com0.Trello.test,WorkspaceServiceTest,createWorkspaceFail1,Long Statement
-group06,com0.Trello.test,WorkspaceServiceTest,createWorkspaceFail2,Long Statement
-group06,com0.Trello.test,WorkspaceServiceTest,createWorkspaceSuccessful,Long Statement
+Project Name,Package Name,Type Name,Method Name,Code Smell,,Justification
+group06,com0.Trello.controller,UserController,userLogin,Magic Number,,Refactored
+group06,com0.Trello.controller,WorkspaceController,createWorkspace,Magic Number,,Refactored
+group06,com0.Trello.controller,WorkspaceController,createWorkspace,Magic Number,,Refactored
+group06,com0.Trello.controller,WorkspaceController,createWorkspace,Magic Number,,Refactored
+group06,com0.Trello.model,ResultVO,ResultVO,Magic Number,,Refactored
+group06,com0.Trello.model,User,User,Long Parameter List,,Can't be refactored - it is a constructor initializing all values
+group06,com0.Trello.model,UserModel,UserModel,Long Parameter List,,Can't be refactored - it is a constructor initializing all values
+group06,com0.Trello.service.implementation,UserImplementation,logIn,Long Statement,,Cant be refactored - a method is called. Values are being passed.
+group06,com0.Trello.service.implementation,UserImplementation,passwordCheck,Magic Number,,Refactored
+group06,com0.Trello.service.implementation,WorkspaceServiceImpl,updateWorkspaceDetails,Magic Number,,Refactored
+group06,com0.Trello.service.implementation,WorkspaceServiceImpl,updateWorkspaceDetails,Magic Number,,Refactored
+group06,com0.Trello,TestsForSignUp,create_user_test,Magic Number,,Refactored
+group06,com0.Trello.test,TaskServiceTest,createAndChangeTaskOk,Long Statement,,Refactored
+group06,com0.Trello.test,TaskServiceTest,createAndChangeTaskFail,Long Statement,,Refactored
+group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksOk,Long Statement,,Refactored
+group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksOk,Long Statement,,Refactored
+group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksFail,Long Statement,,Refactored
+group06,com0.Trello.test,TaskServiceTest,createAndChangeTasksFail,Long Statement,,Refactored
