@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Form, InputGroup } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
+import axios from 'axios';
 const TaskTable = ({ allTasks, search }) => {
     const filteredTasks = allTasks.filter(
       (task) =>
@@ -44,6 +45,8 @@ const Boards = () => {
     const [Date, setDueDate] = useState('');
     const [taskStatus, setStatus] = useState('Todo');
     const [allTasks, setAllTasks] = useState([]); // Add the allTasks state
+    const [selectedTask, setSelectedTask] = useState(null);
+    const [selectedMember, setSelectedMember] = useState(null);
 
     const handleCreateBoard = () => {
         if (boardTitle.trim() !== '') {
@@ -101,7 +104,24 @@ const Boards = () => {
           setTasks(updatedTasks);
         }
       };
-      
+    
+    const handleAssignMember = (task, member) => {
+      // Send the API request to assign the member to the task
+      axios
+        .put(`http://localhost:8080/task/fetch/${task.id}`, { memberId: member.id })
+        .then(() => {
+          // Update the state after a successful assignment
+          const updatedTasks = tasks.map((t) => {
+            if (t.id === task.id) {
+              return { ...t, assignedMemberId: member.id };
+            }
+            return t;
+          });
+          setTasks(updatedTasks);
+        })
+        .catch((error) => console.error(error));
+    };
+
 
     const handleEditBoard = (index, newTitle) => {
         const updatedBoards = [...boards];
@@ -234,6 +254,9 @@ const Boards = () => {
                                   onClick={() => handleDeleteTask(index, taskIndex)}
                                 >
                                   Delete Task
+                                </button>
+                                <button onClick={() => handleAssignMember(selectedTask, selectedMember)}>
+                                  Assign
                                 </button>
                               </li>
                             )}
