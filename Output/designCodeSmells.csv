@@ -1,0 +1,18 @@
+Project Name,Package Name,Type Name,Code Smell,Justification
+group06,com0.Trello.config,CorsConfig,Unutilized Abstraction,Refactored
+group06,com0.Trello.controller,BoardsController,Unutilized Abstraction,False Positive
+group06,com0.Trello.controller,TaskController,Unutilized Abstraction,False Positive
+group06,com0.Trello.controller,UserController,Unutilized Abstraction,False Positive
+group06,com0.Trello.controller,WorkspaceController,Unutilized Abstraction,False Positive
+group06,com0.Trello.model,ResultVO,Unutilized Abstraction,Can't be refactored: it is a helper class
+group06,com0.Trello.repository,BoardsRepository,Unnecessary Abstraction,Refactored
+group06,com0.Trello.repository,TaskRepository,Unnecessary Abstraction,Refactored
+group06,com0.Trello.service.implementation,BoardsServiceImpl,Unutilized Abstraction,False Positive
+group06,com0.Trello.service.implementation,WorkspaceServiceImpl,Unutilized Abstraction,False Positive
+group06,com0.Trello,TestsForSignUp,Unutilized Abstraction,Did not refactor tests
+group06,com0.Trello.test,TaskServiceTest,Unutilized Abstraction,Did not refactor tests
+group06,com0.Trello.test,UserServiceTest,Unutilized Abstraction,Did not refactor tests
+group06,com0.Trello.test,WorkspaceServiceTest,Unutilized Abstraction,Did not refactor tests
+group06,com0.Trello.model,ResultVO,Unutilized Abstraction,Refactored
+group06,com0.Trello.model,UserModel,Unutilized Abstraction,Refactored
+group06,com0.Trello.model,UserSignIn,Unutilized Abstraction,Refactored

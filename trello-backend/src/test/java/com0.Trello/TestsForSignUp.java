@@ -2,7 +2,7 @@ package com0.Trello;
 
 
 import com0.Trello.model.User;
-import com0.Trello.model.UserModel;
+
 import com0.Trello.repository.UserRepository;
 import com0.Trello.service.UserService;
 import com0.Trello.service.implementation.UserImplementation;
