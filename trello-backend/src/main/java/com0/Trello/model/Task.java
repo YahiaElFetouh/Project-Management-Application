@@ -18,6 +18,17 @@ public class Task {
     private Integer boardId;
     @Column(name = "due_date", nullable = false)
     private Date due_date;
+
+    public Task() {
+    }
+
+    public Task(int taskId, String taskName, String status, int boardId) {
+        this.taskId = taskId;
+        this.taskName = taskName;
+        this.status = status;
+        this.boardId = boardId;
+    }
+
     public Integer getTaskId() {
         return taskId;
     }

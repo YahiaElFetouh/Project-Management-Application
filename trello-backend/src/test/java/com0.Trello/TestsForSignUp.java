@@ -50,8 +50,9 @@ public class TestsForSignUp {
     @Test
     public void create_user_test() throws Exception {
         // Create the User instance
+        Long id = 5L;
         User user = new User();
-        user.setId(5L);
+        user.setId(id);
         user.setEmail("foo@bar.ca");
 
         user.setPassword("P@assword01275");
