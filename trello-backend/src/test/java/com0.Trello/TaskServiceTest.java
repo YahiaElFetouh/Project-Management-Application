@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import com0.Trello.model.User;
-import com0.Trello.model.UserModel;
+
 import com0.Trello.repository.UserRepository;
 import com0.Trello.service.UserService;
 import com0.Trello.service.implementation.UserImplementation;
