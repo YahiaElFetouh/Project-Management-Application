@@ -1,0 +1,54 @@
+Index: src/LoginForm.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, { useState } from 'react';\r\nimport axios from 'axios';\r\nimport qs from 'qs'; \r\nimport './LoginForm.css'\r\nconst LoginForm = () => {\r\n  const [username, setUsername] = useState('');\r\n  const [password, setPassword] = useState('');\r\n\r\n  const handleUsernameChange = (e) => {\r\n    setUsername(e.target.value);\r\n  };\r\n\r\n  const handlePasswordChange = (e) => {\r\n    setPassword(e.target.value);\r\n  };\r\n\r\n  const handleSubmit = (e) => {\r\n    e.preventDefault();\r\n    \r\n    console.log('username:', username);\r\n    console.log('password:', password);\r\n    const data = qs.stringify({\r\n      email: username,\r\n      password: password\r\n    });\r\n   \r\n    \r\n    axios.post('http://127.0.0.1:8080/UserSignIn/login', data)\r\n      .then(response => {\r\n         const data = response.data;\r\n         if (data.code === 200) {\r\n          alert(\"Login Success!\")\r\n\r\n         }else{\r\n          alert(\"Login fail!\")\r\n         }\r\n      })\r\n      .catch(error => {\r\n        console.log('loginfail', error);\r\n        alert(\"error\");\r\n        \r\n      });\r\n  };\r\n\r\n  return (\r\n   <form onSubmit={handleSubmit}>\r\n      <div class=\"login-container\">\r\n      <div class=\"login-form\">\r\n        <label for=\"username\"></label>\r\n        <input\r\n          type=\"text\"\r\n          id=\"username\"\r\n          value={username}\r\n          placeholder='email'\r\n          onChange={handleUsernameChange}\r\n        />\r\n\r\n        <label for=\"password\"></label>\r\n        <input\r\n          type=\"password\"\r\n          id=\"password\"\r\n          value={password}\r\n          placeholder='password'\r\n          onChange={handlePasswordChange}\r\n        />\r\n\r\n         <button type=\"submit\">Login</button>\r\n      </div>\r\n       </div>\r\n      \r\n    </form>\r\n    \r\n  );\r\n};\r\n\r\nexport default LoginForm;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/LoginForm.js b/src/LoginForm.js
+--- a/src/LoginForm.js	
++++ b/src/LoginForm.js	
+@@ -1,7 +1,7 @@
+ import React, { useState } from 'react';
+ import axios from 'axios';
+ import qs from 'qs'; 
+-import './LoginForm.css'
++import './/src/LoginForm.css'
+ const LoginForm = () => {
+   const [username, setUsername] = useState('');
+   const [password, setPassword] = useState('');
+Index: ../.idea/Project_Front.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../.idea/Project_Front.iml b/../.idea/Project_Front.iml
+new file mode 100644
+--- /dev/null	
++++ b/../.idea/Project_Front.iml	
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="JAVA_MODULE" version="4">
++  <component name="NewModuleRootManager" inherit-compiler-output="true">
++    <exclude-output />
++    <content url="file://$MODULE_DIR$" />
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/.gitignore
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	
++++ b/.idea/.gitignore	
+@@ -0,0 +1,8 @@
++# Default ignored files
++/shelf/
++/workspace.xml
++# Editor-based HTTP Client requests
++/httpRequests/
++# Datasource local storage ignored files
++/dataSources/
++/dataSources.local.xml
