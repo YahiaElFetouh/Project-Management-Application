@@ -51,15 +51,24 @@
 //
 // export default App;
 import React from 'react';
-import Boards from './Pages/Boards';
 import './App.css';
+import{ store } from "./store";
+import {BrowserRouter} from "react-router-dom";
+import Router from "./routes";
+import { Provider } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css'
+
 
 function App() {
-    return (
-        <div className="App">
-            <h1>Trello-like App</h1>
-            <Boards />
-        </div>
+    return ( 
+        <>
+        <Provider store={store}>
+            <BrowserRouter>
+            <Router />
+            </BrowserRouter>
+        </Provider>
+    
+        </>
     );
 }
 
